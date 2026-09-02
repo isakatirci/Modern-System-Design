@@ -7,6 +7,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/**
+ * KGS key havuzundaki tek bir önceden üretilmiş short key kaydını temsil eden entity.
+ * <p>
+ * System design kavramı: <b>pre-allocated key pool</b> — short key'ler create anında
+ * üretilmez; bu tabloda {@code allocated=false} olarak bekler, kullanıldığında
+ * {@code allocated=true} işaretlenir.
+ * <p>
+ * {@link com.systemdesign.shorturl.service.KeyGenerationService} allocate/preAllocate
+ * işlemlerini yürütür; {@link ShortenedUrl} ile eşleşen {@code keyValue} buradan gelir.
+ */
 @Entity
 @Table(name = "short_url_keys")
 public class ShortUrlKey {

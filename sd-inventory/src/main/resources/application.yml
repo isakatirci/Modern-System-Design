@@ -1,3 +1,13 @@
+# =============================================================================
+# sd-inventory — Flash sale stok + bilet koltuk hold (Kurs Ch.39 / Ch.44)
+# =============================================================================
+# Port: 8084
+#
+# İki demo:
+#   1) InventoryService — atomic stok azaltma (race condition önleme)
+#   2) SeatReservationService — koltuk geçici hold + TTL
+# =============================================================================
+
 server:
   port: 8084
 
@@ -7,4 +17,5 @@ spring:
 
 systemdesign:
   ticketing:
+    # Koltuk hold süresi (saniye). 900 = 15 dakika sonra hold düşer.
     hold-ttl-seconds: 900

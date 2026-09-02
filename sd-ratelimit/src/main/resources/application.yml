@@ -1,3 +1,12 @@
+# =============================================================================
+# sd-ratelimit — API rate limiter demo (Kurs Ch.17 / Ch.33)
+# =============================================================================
+# Port: 8086
+#
+# Token bucket algoritması: burst trafiğe izin verir, sonra hız sınırlar.
+# Limit aşılınca HTTP 429 Too Many Requests döner.
+# =============================================================================
+
 server:
   port: 8086
 
@@ -7,5 +16,7 @@ spring:
 
 systemdesign:
   ratelimit:
+    # capacity = kovadaki maksimum token (ani burst)
     capacity: 10
+    # refill-per-second = saniyede eklenen token sayısı (sürekli hız)
     refill-per-second: 5

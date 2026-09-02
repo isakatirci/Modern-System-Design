@@ -6,10 +6,19 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-/** RFC 7807 ProblemDetail ile standart hata response'ları. */
+/**
+ * Global exception handler; tüm controller'lardan fırlayan hataları
+ * RFC 7807 {@code ProblemDetail} formatında standart response'a çevirir.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * Geçersiz argüman hatalarını HTTP 400 Bad Request olarak döner.
+     *
+     * @param ex fırlatılan {@code IllegalArgumentException}
+     * @return ProblemDetail response body
+     */
     @ExceptionHandler(IllegalArgumentException.class)
     public ProblemDetail handleIllegalArgument(IllegalArgumentException ex) {
         ProblemDetail detail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
@@ -17,6 +26,12 @@ public class GlobalExceptionHandler {
         return detail;
     }
 
+    /**
+     * Geçersiz state hatalarını HTTP 409 Conflict olarak döner.
+     *
+     * @param ex fırlatılan {@code IllegalStateException}
+     * @return ProblemDetail response body
+     */
     @ExceptionHandler(IllegalStateException.class)
     public ProblemDetail handleIllegalState(IllegalStateException ex) {
         ProblemDetail detail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
@@ -24,6 +39,12 @@ public class GlobalExceptionHandler {
         return detail;
     }
 
+    /**
+     * Bean validation hatalarını HTTP 400 Bad Request olarak döner.
+     *
+     * @param ex {@code @Valid} annotation ile tetiklenen validation exception
+     * @return ilk field hatasını içeren ProblemDetail response
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ProblemDetail handleValidation(MethodArgumentNotValidException ex) {
         String message = ex.getBindingResult().getFieldErrors().stream()

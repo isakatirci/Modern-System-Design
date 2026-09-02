@@ -1,3 +1,13 @@
+# =============================================================================
+# sd-feed — Twitter timeline demo (Kurs Ch.30, hybrid fanout)
+# =============================================================================
+# Port: 8083
+#
+# Kavram: Push vs Pull fanout
+#   - Az takipçili kullanıcı → post yazılınca takipçi timeline'larına PUSH edilir
+#   - Çok takipçili (celebrity) → post sadece yazarın listesinde; okurken PULL edilir
+# =============================================================================
+
 server:
   port: 8083
 
@@ -7,4 +17,6 @@ spring:
 
 systemdesign:
   feed:
+    # Bu eşiğin altındaki yazarlar için push fanout uygulanır
+    # Üstündekiler pull model (celebrity problem)
     push-follower-threshold: 10000

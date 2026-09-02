@@ -1,29 +1,52 @@
+# =============================================================================
+# sd-shorturl — TinyURL benzeri URL kısaltma servisi (Kurs Ch.25)
+# =============================================================================
+# Bu dosya Spring Boot'un otomatik okuduğu ayar dosyasıdır (application.yml).
+# Uygulama açılırken buradaki değerler memory'e yüklenir.
+#
+# Çalıştırma: proje klasöründe  mvn spring-boot:run
+# Test:       mvn test
+# =============================================================================
+
 spring:
   application:
+    # Servis adı; log ve health endpoint'lerinde görünür
     name: sd-shorturl
+
   datasource:
+    # H2 = geliştirme için gömülü DB (production'da PostgreSQL/MySQL kullanılır)
+    # mem:shorturl = RAM'de geçici DB; uygulama kapanınca silinir
     url: jdbc:h2:mem:shorturl;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
     driver-class-name: org.h2.Driver
     username: sa
     password:
+
   jpa:
     hibernate:
+      # update = entity sınıflarına göre tabloları otomatik oluştur/güncelle
       ddl-auto: update
+    # open-in-view=false: HTTP request bitince DB session kapanır (best practice)
     open-in-view: false
+
   cache:
+    # Caffeine = yüksek hızlı in-memory cache (redirect hot path için)
     type: caffeine
     caffeine:
+      # En fazla 50k kayıt; 1 saat sonra expire
       spec: maximumSize=50000,expireAfterWrite=3600s
 
 server:
+  # REST API ve redirect bu portta dinler
   port: 8081
 
 systemdesign:
   shorturl:
+    # Oluşturulan kısa URL'lerin prefix'i (ör: http://localhost:8081/abc12)
     base-host: http://localhost:8081
 
 management:
   endpoint:
     health:
       probes:
+        # Kubernetes readiness/liveness probe desteği
         enabled: true

@@ -9,6 +9,16 @@ import jakarta.persistence.Table;
 
 import java.time.Instant;
 
+/**
+ * Tek bir paste kaydını temsil eden JPA entity.
+ * <p>
+ * System design kavramı: <b>content store with TTL</b> — metin içeriği Snowflake id
+ * ile adreslenir; {@code expiresAt} ile otomatik silme (TTL) desteklenir;
+ * {@link PasteVisibility} ile erişim seviyesi modellenir.
+ * <p>
+ * {@link com.systemdesign.pastebin.repository.PasteRepository} üzerinden persist edilir;
+ * {@link com.systemdesign.pastebin.service.PasteService} create/read/cleanup akışlarında kullanılır.
+ */
 @Entity
 @Table(name = "pastes")
 public class Paste {
@@ -61,6 +71,12 @@ public class Paste {
         return createdAt;
     }
 
+    /**
+     * Verilen anda paste'in süresinin dolup dolmadığını kontrol eder.
+     *
+     * @param now karşılaştırma anı
+     * @return TTL yoksa false; expiresAt geçmişse true
+     */
     public boolean isExpired(Instant now) {
         return expiresAt != null && now.isAfter(expiresAt);
     }

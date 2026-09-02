@@ -18,6 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
+/**
+ * URL kısaltma servisinin REST API katmanı.
+ * <p>
+ * System design kavramı: <b>API Gateway / Web Layer</b> — HTTP request'leri alır,
+ * validation uygular ve domain service'lere delege eder; response ve redirect döner.
+ * <p>
+ * {@link UrlShortenerService} ile shorten/resolve işlemlerini yapar;
+ * {@link KeyGenerationService} ile uygulama açılışında key havuzunu doldurur (KGS pre-allocation).
+ */
 @RestController
 public class ShortUrlController {
 
@@ -29,11 +38,22 @@ public class ShortUrlController {
         this.keyGenerationService = keyGenerationService;
     }
 
+    /**
+     * Uygulama başlarken key havuzuna önceden üretilmiş short key'leri yükler.
+     * KGS (Key Generation Service) pattern: create sırasında DB'de key üretmek yerine
+     * havuzdan hazır key çekilir; bu da latency ve contention'ı azaltır.
+     */
     @PostConstruct
     void seedKeys() {
         keyGenerationService.preAllocateKeys(1000, 1L);
     }
 
+    /**
+     * Uzun URL'yi kısaltır ve oluşturulan short URL bilgisini döner.
+     *
+     * @param request {@code longUrl} içeren create request
+     * @return short key, tam short URL ve orijinal long URL
+     */
     @PostMapping("/api/v1/urls")
     public ShortUrlResponse create(@Valid @RequestBody CreateShortUrlRequest request) {
         ShortenedUrl shortened = urlShortenerService.shorten(request.longUrl());
@@ -43,6 +63,12 @@ public class ShortUrlController {
                 shortened.getLongUrl());
     }
 
+    /**
+     * Short key ile gelen isteği orijinal long URL'ye HTTP 302 redirect eder.
+     *
+     * @param shortKey path'teki kısa anahtar
+     * @return bulunursa {@code Location} header'lı redirect; yoksa 404
+     */
     @GetMapping("/{shortKey}")
     public ResponseEntity<Void> redirect(@PathVariable String shortKey) {
         Optional<String> longUrl = urlShortenerService.resolveLongUrl(shortKey);

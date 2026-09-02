@@ -10,16 +10,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+/**
+ * Rate limit korumalı demo REST endpoint'i.
+ * <p>
+ * {@code X-Client-Id} header'ına göre client bazlı token bucket kontrolü yapar;
+ * limit aşılırsa HTTP 429 ve {@code Retry-After} header döner.
+ */
 @RestController
 @RequestMapping("/api/v1")
 public class RateLimitController {
 
     private final RateLimitService rateLimitService;
 
+    /**
+     * Spring dependency injection ile rate limit servisini alır.
+     *
+     * @param rateLimitService client bazlı limiter yönetimi
+     */
     public RateLimitController(RateLimitService rateLimitService) {
         this.rateLimitService = rateLimitService;
     }
 
+    /**
+     * Rate limit kontrolünden geçen isteklere başarı yanıtı döner.
+     *
+     * @param clientId isteği yapan client (header yoksa "anonymous")
+     * @return 200 OK veya 429 Too Many Requests
+     */
     @GetMapping("/resource")
     public ResponseEntity<Map<String, String>> resource(
             @RequestHeader(value = "X-Client-Id", defaultValue = "anonymous") String clientId) {

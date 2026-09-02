@@ -16,6 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
 
+/**
+ * Pastebin servisinin REST API katmanı.
+ * <p>
+ * System design kavramı: <b>REST API / Web Layer</b> — paste create ve read
+ * endpoint'lerini sunar; request validation ve HTTP status kodlarını yönetir.
+ * <p>
+ * {@link PasteService} ile iş kurallarını delege eder; domain {@link Paste}
+ * entity'sini {@link PasteResponse} DTO'ya dönüştürerek client'a döner.
+ */
 @RestController
 @RequestMapping("/api/v1/pastes")
 public class PasteController {
@@ -26,6 +35,12 @@ public class PasteController {
         this.pasteService = pasteService;
     }
 
+    /**
+     * Yeni paste oluşturur; opsiyonel TTL ve visibility ile kaydeder.
+     *
+     * @param request content, ttlSeconds ve visibility içeren create request
+     * @return oluşturulan paste bilgisi (HTTP 201)
+     */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PasteResponse create(@Valid @RequestBody CreatePasteRequest request) {
@@ -34,6 +49,13 @@ public class PasteController {
         return toResponse(paste);
     }
 
+    /**
+     * Id ile paste'i okur; süresi dolmuş kayıtlar bulunamaz sayılır.
+     *
+     * @param id paste id (Snowflake tabanlı string)
+     * @return paste içeriği ve metadata
+     * @throws IllegalArgumentException paste yoksa veya expire olduysa
+     */
     @GetMapping("/{id}")
     public PasteResponse get(@PathVariable String id) {
         Paste paste = pasteService.findById(id)

@@ -9,6 +9,15 @@ import jakarta.persistence.Table;
 
 import java.time.Instant;
 
+/**
+ * Short key ile long URL arasındaki kalıcı eşlemeyi temsil eden JPA entity.
+ * <p>
+ * System design kavramı: <b>URL mapping store</b> — redirect sırasında short key
+ * ile orijinal URL lookup yapılır; bu tablo sistemin ana veri modelidir.
+ * <p>
+ * {@link com.systemdesign.shorturl.repository.ShortenedUrlRepository} üzerinden
+ * persist edilir; {@link com.systemdesign.shorturl.service.UrlShortenerService} tarafından oluşturulur.
+ */
 @Entity
 @Table(name = "shortened_urls")
 public class ShortenedUrl {

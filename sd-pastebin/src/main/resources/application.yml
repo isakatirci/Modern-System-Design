@@ -1,11 +1,21 @@
+# =============================================================================
+# sd-pastebin — Metin paylaşım servisi (Kurs Ch.26, Pastebin benzeri)
+# =============================================================================
+# Port: 8082
+# API:  POST /api/v1/pastes  → yeni paste oluştur
+#       GET  /api/v1/pastes/{id} → paste oku
+# =============================================================================
+
 spring:
   application:
     name: sd-pastebin
+
   datasource:
     url: jdbc:h2:mem:pastebin;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
     driver-class-name: org.h2.Driver
     username: sa
     password:
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -16,4 +26,6 @@ server:
 
 systemdesign:
   snowflake:
+    # Snowflake ID: her sunucuya farklı machine-id ver (0-1023 arası)
+    # Aynı id iki instance'ta kullanılırsa çakışma riski oluşur
     machine-id: 2

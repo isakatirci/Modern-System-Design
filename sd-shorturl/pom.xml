@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Maven POM — proje kimliği, bağımlılıklar (dependencies) ve build ayarları.
+  Bu dosya sd-shorturl'ün bağımsız tanımıdır; parent multi-module yok.
+
+  Komutlar (bu klasörde):
+    mvn test              → unit/integration test
+    mvn spring-boot:run   → API'yi port 8081'de başlat
+    mvn package           → çalıştırılabilir JAR üret
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
