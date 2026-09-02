@@ -1,7 +1,0 @@
-com\systemdesign\inventory\web\InventoryController.class
-com\systemdesign\inventory\service\OrderSagaOrchestrator$PaymentGateway.class
-com\systemdesign\inventory\service\InventoryService.class
-com\systemdesign\inventory\service\OrderSagaOrchestrator.class
-com\systemdesign\inventory\service\SeatReservationService$Hold.class
-com\systemdesign\inventory\InventoryApplication.class
-com\systemdesign\inventory\service\SeatReservationService.class

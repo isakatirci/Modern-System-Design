@@ -1,0 +1,114 @@
+# ===================================================================
+# System Design Projects - Comprehensive .gitignore
+# ===================================================================
+
+# --- Compiled Java Class files ---
+*.class
+*.clover
+*.ctxt
+
+# --- Log files ---
+*.log
+*.log.*
+logs/
+log/
+
+# --- BlueJ files ---
+*.ctxt
+
+# --- Mobile Tools for Java (J2ME) ---
+.mtj.tmp/
+
+# --- Package Files ---
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# --- Virtual Machine crash logs ---
+hs_err_pid*
+replay_pid*
+
+# --- Maven build directories & output ---
+target/
+**/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# --- Gradle (if used) ---
+.gradle/
+**/build/
+!src/**/build/
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
+
+# --- IntelliJ IDEA ---
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+**/out/
+.idea_modules/
+
+# --- Eclipse IDE ---
+.apt_generated/
+.apt_generated_tests/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+
+# --- Visual Studio Code ---
+.vscode/
+*.code-workspace
+.history/
+
+# --- NetBeans IDE ---
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-attrs
+
+# --- OS Generated Files ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# --- Temporary & Backup files ---
+*.bak
+*.swp
+*.swo
+*~
+*.tmp
+*.temp
+
+# --- Local Environment & Secrets ---
+.env
+.env.*
+!.env.example
+*.local
+secrets/
+*.pem
+*.key
+*.pfx
+*.p12
