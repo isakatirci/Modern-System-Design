@@ -1,0 +1,4 @@
+com\systemdesign\blocks\PrefixTrieTest.class
+com\systemdesign\blocks\InvertedIndexTest.class
+com\systemdesign\blocks\TokenBucketRateLimiterTest.class
+com\systemdesign\blocks\ConsistentHashRingTest.class

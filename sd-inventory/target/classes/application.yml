@@ -1,0 +1,10 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: sd-inventory
+
+systemdesign:
+  ticketing:
+    hold-ttl-seconds: 900

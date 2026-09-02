@@ -1,0 +1,6 @@
+com\systemdesign\common\CommonAutoConfiguration.class
+com\systemdesign\common\GlobalExceptionHandler.class
+com\systemdesign\common\SystemReadinessHealthIndicator.class
+com\systemdesign\common\CapacityCalculatorService.class
+com\systemdesign\common\CapacityProfile.class
+com\systemdesign\common\CorrelationIdFilter.class
